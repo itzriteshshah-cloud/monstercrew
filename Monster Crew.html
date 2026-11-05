@@ -1,0 +1,1055 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Monster Crew</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Rubik:wght@400;500;700&display=swap">
+<style>
+/* Layout: sticker-sheet multi-page site. One nav bar routes between pages on the URL hash. Chunky outlined cards with hard shadows, the monster gang as the recurring motif. */
+:root{
+  --bg:#F2EDFF; --surface:#FFFFFF; --ink:#1E1240; --muted:#5B4E86;
+  --edge:#1E1240; --line:#1E1240;
+  --orange:#FF6B2C; --lime:#6EE07F; --sun:#FFD23F; --pink:#FF6FAE; --sky:#6CC4FF;
+  --on-color:#1E1240;
+  --f-display:'Bowlby One','Arial Black',Impact,sans-serif;
+  --f-body:'Rubik',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#150B2E; --surface:#241447; --ink:#F4EEFF; --muted:#B9ABE6; --edge:#8D76F2; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#150B2E; --surface:#241447; --ink:#F4EEFF; --muted:#B9ABE6; --edge:#8D76F2; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.55;
+  padding-block:20px 40px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+.page{display:flex;flex-direction:column;gap:64px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:.01em}
+p{margin:0;max-width:62ch}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+
+/* monster art */
+.mb{fill:currentColor;stroke:var(--line);stroke-width:5;stroke-linejoin:round}
+.eye{fill:#fff;stroke:var(--line);stroke-width:4}
+.pupil{fill:var(--line)}
+.ink{fill:var(--line)}
+.tooth{fill:#fff;stroke:var(--line);stroke-width:3;stroke-linejoin:round}
+.line{fill:none;stroke:var(--line);stroke-width:6;stroke-linecap:round}
+.mon{display:block;width:100%;height:auto}
+
+/* banner + nav */
+.banner{background:var(--pink);color:var(--on-color);border:3px solid var(--line);border-radius:14px;padding:10px 16px;font-weight:500;overflow-wrap:anywhere}
+nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:1.4rem;text-decoration:none}
+.logo svg{width:44px;height:44px;color:var(--lime)}
+.links{display:flex;flex-wrap:wrap;gap:6px 18px;font-weight:500}
+.links a{text-decoration:none;padding:4px 2px;border-bottom:3px solid transparent}
+.links a:hover,.links a[aria-current="page"]{border-bottom-color:var(--orange)}
+
+/* buttons */
+.btn{
+  display:inline-block;font-family:var(--f-body);font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;
+  padding:13px 22px;border:3px solid var(--line);border-radius:14px;background:var(--sun);color:var(--on-color);
+  box-shadow:4px 4px 0 var(--line);transition:transform .12s, box-shadow .12s;
+}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.btn.alt{background:var(--pink)}
+.btn.sm{padding:8px 14px;font-size:.9rem;box-shadow:3px 3px 0 var(--line)}
+.btn.danger{background:var(--orange)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:center}
+.hero h1{font-size:clamp(3rem,9vw,6.4rem)}
+.hero h1 .tilt{display:inline-block;background:var(--orange);color:var(--on-color);padding:0 .18em;border:4px solid var(--line);border-radius:.18em;transform:rotate(-3deg);box-shadow:6px 6px 0 var(--line);margin-top:.12em}
+.hero p.lead{font-size:1.22rem;margin-top:26px;color:var(--ink)}
+.cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px}
+.gang{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0}
+.gang .m{min-width:0}
+.gang .m:nth-child(1){transform:rotate(-4deg)}
+.gang .m:nth-child(2){transform:translateY(22px) rotate(3deg)}
+.gang .m:nth-child(3){transform:rotate(3deg)}
+.gang .m:nth-child(4){transform:translateY(22px) rotate(-3deg)}
+@media (prefers-reduced-motion:no-preference){
+  .gang .m svg{animation:bob 3.6s ease-in-out infinite}
+  .gang .m:nth-child(2) svg{animation-delay:-.9s}
+  .gang .m:nth-child(3) svg{animation-delay:-1.8s}
+  .gang .m:nth-child(4) svg{animation-delay:-2.7s}
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ticker */
+.ticker{overflow:hidden;border:3px solid var(--line);border-radius:16px;background:var(--lime);color:var(--on-color);transform:rotate(-1deg)}
+.track{display:flex;width:max-content;font-family:var(--f-display);font-size:1.5rem;white-space:nowrap}
+.track span{padding:14px 22px}
+@media (prefers-reduced-motion:no-preference){.track{animation:slide 28s linear infinite}}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* section heads */
+.head{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.head h2{font-size:clamp(2rem,5vw,3.2rem)}
+.head p{color:var(--muted);font-size:1.1rem}
+
+/* cards */
+.card{background:var(--surface);border:3px solid var(--edge);border-radius:20px;box-shadow:6px 6px 0 var(--edge);padding:20px;min-width:0}
+.grid{display:grid;gap:26px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+.crew .card{display:flex;flex-direction:column;gap:14px}
+.crew .art{border:3px solid var(--line);border-radius:14px;padding:12px;color:var(--on-color)}
+.crew h3{font-size:1.5rem}
+.role{font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;color:var(--muted)}
+.crew p{font-size:.98rem;color:var(--muted)}
+.crew .card:nth-child(odd){transform:rotate(-1deg)}
+.crew .card:nth-child(even){transform:rotate(1deg)}
+
+.svc{display:flex;flex-direction:column;gap:12px}
+.svc .tag{align-self:flex-start;font-family:var(--f-display);font-size:1.15rem;padding:6px 14px;border:3px solid var(--line);border-radius:999px;color:var(--on-color)}
+.svc h3{font-size:1.5rem}
+.svc p{color:var(--muted);font-size:1rem}
+a.card.go{display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:transform .12s}
+a.card.go:hover{transform:translate(-2px,-2px)}
+a.card.go h3{font-size:1.5rem}
+a.card.go p{color:var(--muted);font-size:1rem}
+
+.shop .tile{display:flex;flex-direction:column;gap:14px}
+.shop .pic{aspect-ratio:1/1;max-width:100%;border:3px solid var(--line);border-radius:14px;display:grid;place-items:center;overflow:hidden}
+.shop .pic svg{width:62%;height:auto}
+.shop h3{font-size:1.3rem}
+.chip{align-self:flex-start;font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;border:2px solid var(--line);background:var(--sun);color:var(--on-color)}
+
+.post{display:flex;flex-direction:column;gap:10px}
+.post h3{font-size:1.25rem}
+.post p{color:var(--muted);font-size:.98rem}
+
+/* quiz */
+.quiz{background:var(--sun);color:var(--on-color);border:4px solid var(--line);border-radius:28px;box-shadow:8px 8px 0 var(--line);padding:clamp(20px,4vw,44px);display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center}
+.quiz h2{font-size:clamp(2rem,5vw,3.2rem)}
+.quiz .q p{margin-top:12px}
+.vibes{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.vibe{font:700 1rem var(--f-body);cursor:pointer;padding:11px 18px;border:3px solid var(--line);border-radius:14px;background:#fff;color:var(--on-color);box-shadow:3px 3px 0 var(--line)}
+.vibe[aria-pressed="true"]{background:var(--pink);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.result{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center;background:#fff;border:3px solid var(--line);border-radius:20px;padding:16px;min-width:0}
+.result svg{width:100%}
+.result h3{font-size:1.5rem}
+.result p{font-size:.98rem;margin-top:6px}
+
+/* games */
+.tabs{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
+.tab{font:700 1rem var(--f-body);cursor:pointer;padding:11px 20px;border:3px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);box-shadow:3px 3px 0 var(--line)}
+.tab[aria-pressed="true"]{background:var(--sun);color:var(--on-color);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.play{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:start}
+.arena{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pick{display:flex;gap:10px;flex-wrap:wrap}
+.pick button{width:60px;height:60px;padding:5px;border:3px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer}
+.pick button[aria-pressed="true"]{background:var(--sun);box-shadow:3px 3px 0 var(--line)}
+.pick svg{width:100%;height:100%;display:block}
+.hud{display:flex;justify-content:space-between;gap:12px;font-family:var(--f-display);font-size:1.05rem}
+.how{color:var(--muted);font-size:.95rem}
+#game{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:360/520;border:4px solid var(--line);border-radius:20px;box-shadow:6px 6px 0 var(--edge);touch-action:none;background:#BDE6FF}
+.mem{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.card-m{aspect-ratio:1/1;border:3px solid var(--line);border-radius:14px;background:var(--orange);color:var(--on-color);cursor:pointer;padding:6px;font:700 1.6rem var(--f-display);display:grid;place-items:center;box-shadow:3px 3px 0 var(--line)}
+.card-m .face{display:none;width:100%}
+.card-m .face svg{display:block;width:100%;height:auto}
+.card-m.up{background:#fff;cursor:default}
+.card-m.up .back{display:none}
+.card-m.up .face{display:block}
+.card-m.done{background:var(--lime);box-shadow:none}
+.whack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hole{aspect-ratio:1/1;border:4px solid var(--line);border-radius:50% 50% 22px 22px;background:#7A4B2A;cursor:pointer;display:grid;place-items:center;padding:8px;font-size:2.6rem;line-height:1;overflow:hidden;color:var(--on-color)}
+.hole svg{display:block;width:100%;height:auto}
+.hole[data-up]{background:var(--sun)}
+.gmsg{min-height:1.5em;font-weight:700}
+.board h3{font-size:1.5rem;margin-bottom:10px}
+.board ol{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.board li{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border:2px solid var(--edge);border-radius:12px}
+.board li.me{background:var(--sun);color:var(--on-color);border-color:var(--line)}
+.board li b{font-family:var(--f-display);font-weight:400}
+.board li span{overflow-wrap:anywhere}
+.status{color:var(--muted);font-size:.95rem}
+
+/* chat */
+.chat{display:flex;flex-direction:column;gap:14px}
+.msgs{height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px}
+.msg{max-width:84%;align-self:flex-start;padding:10px 14px;border:3px solid var(--edge);border-radius:16px;background:var(--bg);overflow-wrap:anywhere}
+.msg.mine{align-self:flex-end;background:var(--lime);color:var(--on-color);border-color:var(--line)}
+.msg .who{display:flex;gap:10px;justify-content:space-between;align-items:center;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+.msg .who button{font:inherit;background:none;border:0;color:inherit;cursor:pointer;padding:0 2px}
+.compose{display:flex;gap:10px;flex-wrap:wrap}
+.compose input{flex:1 1 200px;min-width:0;font:inherit;padding:12px 14px;border:3px solid var(--edge);border-radius:14px;background:var(--surface);color:var(--ink)}
+.compose #nick{flex:0 1 150px}
+
+/* admin */
+.adm{display:flex;flex-direction:column;gap:14px}
+.adm h3{font-size:1.4rem}
+.adm .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.adm input[type="text"],.adm select{font:inherit;width:100%;padding:11px 14px;border:3px solid var(--edge);border-radius:12px;background:var(--surface);color:var(--ink)}
+.adm label{display:flex;gap:10px;align-items:center;font-weight:500}
+.adm input[type="checkbox"]{width:22px;height:22px;accent-color:var(--orange)}
+.adm .list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto}
+.adm .item{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:8px 12px;border:2px solid var(--edge);border-radius:12px}
+.adm .item span{min-width:0;overflow-wrap:anywhere;font-size:.95rem}
+
+footer{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;border-top:3px solid var(--edge);padding-top:22px;color:var(--muted);font-size:.95rem}
+footer strong{font-family:var(--f-display);font-weight:400;color:var(--ink);font-size:1.15rem}
+
+@media (max-width:820px){
+  .hero,.quiz,.play{grid-template-columns:1fr}
+  .gang{max-width:460px;margin:0 auto 22px;width:100%}
+  .arena{max-width:420px;width:100%;margin:0 auto}
+}
+@media (max-width:480px){
+  body{font-size:16px}
+  .page{gap:52px}
+  .result{grid-template-columns:96px 1fr}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="m-blob" viewBox="0 0 200 200">
+      <path class="mb" d="M30 150 C20 80 60 30 100 30 C150 30 185 80 170 150 C168 175 140 182 100 182 C60 182 32 175 30 150Z"/>
+      <circle class="eye" cx="100" cy="84" r="28"/><circle class="pupil" cx="104" cy="88" r="12"/>
+      <path class="ink" d="M62 128 Q100 168 138 128Z"/>
+      <path class="tooth" d="M78 133 h14 v12 h-14z M108 133 h14 v12 h-14z"/>
+    </symbol>
+    <symbol id="m-spike" viewBox="0 0 200 200">
+      <path class="mb" d="M50 62 L62 14 L86 52 L100 8 L114 52 L138 14 L150 62Z"/>
+      <rect class="mb" x="38" y="52" width="124" height="130" rx="52"/>
+      <circle class="eye" cx="76" cy="104" r="17"/><circle class="pupil" cx="80" cy="106" r="7"/>
+      <circle class="eye" cx="124" cy="104" r="17"/><circle class="pupil" cx="120" cy="106" r="7"/>
+      <path class="line" d="M72 144 Q100 168 128 144"/>
+    </symbol>
+    <symbol id="m-fuzz" viewBox="0 0 200 200">
+      <circle cx="100" cy="106" r="70" fill="none" style="stroke:var(--line)" stroke-width="30" stroke-dasharray="0 27.5" stroke-linecap="round"/>
+      <circle cx="100" cy="106" r="70" fill="none" style="stroke:currentColor" stroke-width="22" stroke-dasharray="0 27.5" stroke-linecap="round"/>
+      <circle class="mb" cx="100" cy="106" r="66" style="stroke-width:0"/>
+      <circle class="eye" cx="68" cy="106" r="14"/><circle class="pupil" cx="70" cy="108" r="6"/>
+      <circle class="eye" cx="100" cy="82" r="14"/><circle class="pupil" cx="100" cy="84" r="6"/>
+      <circle class="eye" cx="132" cy="106" r="14"/><circle class="pupil" cx="130" cy="108" r="6"/>
+      <ellipse class="ink" cx="100" cy="146" rx="18" ry="11"/>
+    </symbol>
+    <symbol id="m-horn" viewBox="0 0 200 200">
+      <path d="M52 70 L36 18 L84 54Z M148 70 L164 18 L116 54Z" style="fill:var(--sun);stroke:var(--line)" stroke-width="5" stroke-linejoin="round"/>
+      <rect class="mb" x="34" y="52" width="132" height="128" rx="46"/>
+      <circle class="eye" cx="76" cy="100" r="16"/><circle class="pupil" cx="78" cy="104" r="7"/>
+      <circle class="eye" cx="124" cy="100" r="16"/><circle class="pupil" cx="122" cy="104" r="7"/>
+      <path class="line" d="M56 78 L92 90 M144 78 L108 90"/>
+      <path class="ink" d="M62 134 H138 Q132 166 100 166 Q68 166 62 134Z"/>
+      <path class="tooth" d="M72 134 l9 18 l9 -18z M110 134 l9 18 l9 -18z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<div class="banner" id="banner" hidden></div>
+
+<nav>
+  <a class="logo" href="#home" aria-label="Monster Crew home"><svg viewBox="0 0 200 200"><use href="#m-blob"/></svg>Monster Crew</a>
+  <div class="links" id="navlinks">
+    <a href="#home">Home</a><a href="#crew">Crew</a><a href="#games">Games</a><a href="#chat">Chat</a><a href="#shop">Shop</a><a href="#join">Join</a><a href="#admin" id="nav-admin" hidden>Admin</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<div class="page" id="p-home">
+  <header class="hero">
+    <div>
+      <h1>Monster <span class="tilt">Crew</span></h1>
+      <p class="lead">A loud little gang of makers, players and troublemakers. We design, build, stream and throw events, and everyone is welcome to hang out in the lair.</p>
+      <div class="cta">
+        <a class="btn" href="#crew">Meet the crew</a>
+        <a class="btn alt" href="#games">Play games</a>
+      </div>
+    </div>
+    <div class="gang" aria-hidden="true">
+      <div class="m" style="color:var(--lime)"><svg class="mon" viewBox="0 0 200 200"><use href="#m-blob"/></svg></div>
+      <div class="m" style="color:var(--pink)"><svg class="mon" viewBox="0 0 200 200"><use href="#m-spike"/></svg></div>
+      <div class="m" style="color:var(--sky)"><svg class="mon" viewBox="0 0 200 200"><use href="#m-fuzz"/></svg></div>
+      <div class="m" style="color:var(--orange)"><svg class="mon" viewBox="0 0 200 200"><use href="#m-horn"/></svg></div>
+    </div>
+  </header>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="track">
+      <span>GAMING ✦ DESIGN ✦ WEBSITES ✦ MERCH ✦ STREAMS ✦ EVENTS ✦ COMMUNITY ✦</span>
+      <span>GAMING ✦ DESIGN ✦ WEBSITES ✦ MERCH ✦ STREAMS ✦ EVENTS ✦ COMMUNITY ✦</span>
+      <span>GAMING ✦ DESIGN ✦ WEBSITES ✦ MERCH ✦ STREAMS ✦ EVENTS ✦ COMMUNITY ✦</span>
+      <span>GAMING ✦ DESIGN ✦ WEBSITES ✦ MERCH ✦ STREAMS ✦ EVENTS ✦ COMMUNITY ✦</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="head">
+      <h2>What we do</h2>
+      <p>One crew, a few specialties. Pick a lane or bring us a weird idea that needs all of them.</p>
+    </div>
+    <div class="grid g2">
+      <article class="card svc"><span class="tag" style="background:var(--pink)">Design</span><h3>Branding and visuals</h3><p>Logos, mascots, posters, social packs and the full look for your team, shop or event.</p></article>
+      <article class="card svc"><span class="tag" style="background:var(--sky)">Build</span><h3>Websites and apps</h3><p>Fast, friendly sites and small tools, from a one-page launch to a full online shop.</p></article>
+      <article class="card svc"><span class="tag" style="background:var(--lime)">Play</span><h3>Gaming and streams</h3><p>Squads, scrims, community nights and live streams with the whole crew on the mic.</p></article>
+      <article class="card svc"><span class="tag" style="background:var(--sun)">Gather</span><h3>Events and community</h3><p>Meetups, tournaments and pop-ups that bring the crew and everyone else into one room.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Jump in</h2><p>Three ways to hang out with the crew right now.</p></div>
+    <div class="grid g3">
+      <a class="card go" href="#games"><h3>Play</h3><p>Three games with a shared leaderboard. Beat the crew's best.</p></a>
+      <a class="card go" href="#chat"><h3>Chat</h3><p>The live lair chat. Say hi to whoever is around.</p></a>
+      <a class="card go" href="#join"><h3>Find your monster</h3><p>A quick quiz that matches you with a crew member.</p></a>
+    </div>
+  </section>
+</div>
+
+<!-- CREW -->
+<div class="page crew" id="p-crew" hidden>
+  <section>
+    <div class="head">
+      <h2>The crew</h2>
+      <p>Four monsters, four jobs, zero chill. Every crew member brings a different kind of trouble.</p>
+    </div>
+    <div class="grid g4">
+      <article class="card">
+        <div class="art" style="background:var(--lime)"><svg class="mon" viewBox="0 0 200 200" role="img" aria-label="Blobby, a one-eyed monster"><use href="#m-blob" style="color:var(--pink)"/></svg></div>
+        <div><div class="role">Captain</div><h3>Blobby</h3></div>
+        <p>Sees everything with one big eye. Plans the missions and keeps the snacks stocked.</p>
+      </article>
+      <article class="card">
+        <div class="art" style="background:var(--sky)"><svg class="mon" viewBox="0 0 200 200" role="img" aria-label="Spike, a spiky monster"><use href="#m-spike" style="color:var(--sun)"/></svg></div>
+        <div><div class="role">Designer</div><h3>Spike</h3></div>
+        <p>Sharp taste, sharper edges. Draws the logos, the posters and every sticker you will want.</p>
+      </article>
+      <article class="card">
+        <div class="art" style="background:var(--pink)"><svg class="mon" viewBox="0 0 200 200" role="img" aria-label="Fuzz, a fuzzy three-eyed monster"><use href="#m-fuzz" style="color:var(--lime)"/></svg></div>
+        <div><div class="role">Builder</div><h3>Fuzz</h3></div>
+        <p>Three eyes on the code at once. Ships the websites, apps and tools the crew relies on.</p>
+      </article>
+      <article class="card">
+        <div class="art" style="background:var(--sun)"><svg class="mon" viewBox="0 0 200 200" role="img" aria-label="Horns, a horned monster with fangs"><use href="#m-horn" style="color:var(--orange)"/></svg></div>
+        <div><div class="role">Hype</div><h3>Horns</h3></div>
+        <p>Runs the streams, the events and the group chat. If something is loud, it was probably Horns.</p>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- GAMES -->
+<div class="page" id="p-games" hidden>
+  <section>
+    <div class="head">
+      <h2>The arcade</h2>
+      <p>Three games, one crew leaderboard each. Your best score is saved when you finish a round.</p>
+    </div>
+    <div class="tabs" role="group" aria-label="Choose a game">
+      <button class="tab" type="button" id="tab-munch" data-g="munch" aria-pressed="true">Monster Munch</button>
+      <button class="tab" type="button" id="tab-memory" data-g="memory" aria-pressed="false">Memory Match</button>
+      <button class="tab" type="button" id="tab-whack" data-g="whack" aria-pressed="false">Whack-a-Monster</button>
+    </div>
+
+    <div class="play">
+      <div class="arena">
+
+        <!-- Munch -->
+        <div class="arena" id="gp-munch">
+          <p class="how">Catch the snacks, dodge the bombs. Drag, tap or use the arrow keys. Three bombs and you are out.</p>
+          <div class="pick" role="group" aria-label="Choose your monster">
+            <button type="button" id="pk-blob" data-m="blob" aria-pressed="true" aria-label="Blobby"><svg viewBox="0 0 200 200"><use href="#m-blob" style="color:var(--pink)"/></svg></button>
+            <button type="button" id="pk-spike" data-m="spike" aria-pressed="false" aria-label="Spike"><svg viewBox="0 0 200 200"><use href="#m-spike" style="color:var(--sun)"/></svg></button>
+            <button type="button" id="pk-fuzz" data-m="fuzz" aria-pressed="false" aria-label="Fuzz"><svg viewBox="0 0 200 200"><use href="#m-fuzz" style="color:var(--lime)"/></svg></button>
+            <button type="button" id="pk-horn" data-m="horn" aria-pressed="false" aria-label="Horns"><svg viewBox="0 0 200 200"><use href="#m-horn" style="color:var(--orange)"/></svg></button>
+          </div>
+          <div class="hud"><span>Score <b id="g-score">0</b></span><span>Best <b id="g-best">0</b></span><span id="g-lives">Lives 3</span></div>
+          <canvas id="game" width="360" height="520" role="img" aria-label="Monster Munch game board"></canvas>
+          <div><button class="btn" id="g-start" type="button">Start game</button></div>
+        </div>
+
+        <!-- Memory -->
+        <div class="arena" id="gp-memory" hidden>
+          <p class="how">Flip two cards at a time and match all eight monster pairs. Fewer moves and less time score higher.</p>
+          <div class="hud"><span>Moves <b id="m-moves">0</b></span><span>Time <b id="m-time">0</b>s</span><span>Best <b id="m-best">0</b></span></div>
+          <div class="mem" id="mem-grid"></div>
+          <div class="gmsg" id="m-msg" aria-live="polite"></div>
+          <div><button class="btn" id="m-start" type="button">New game</button></div>
+        </div>
+
+        <!-- Whack -->
+        <div class="arena" id="gp-whack" hidden>
+          <p class="how">Whack every monster that pops up. Hit a pizza and you lose 2 points. You have 30 seconds.</p>
+          <div class="hud"><span>Score <b id="w-score">0</b></span><span>Time <b id="w-time">30</b>s</span><span>Best <b id="w-best">0</b></span></div>
+          <div class="whack" id="wh-grid"></div>
+          <div class="gmsg" id="w-msg" aria-live="polite"></div>
+          <div><button class="btn" id="w-start" type="button">Start game</button></div>
+        </div>
+
+      </div>
+      <div class="card board">
+        <h3 id="lb-title">Munch leaderboard</h3>
+        <p class="status" id="lb-status">Loading scores...</p>
+        <ol id="lb"></ol>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CHAT -->
+<div class="page" id="p-chat" hidden>
+  <section>
+    <div class="head">
+      <h2>The lair chat</h2>
+      <p>One live chat for the whole crew. Messages reach everyone who has the page open as soon as they are sent.</p>
+    </div>
+    <div class="card chat">
+      <div class="msgs" id="msgs" role="log" aria-live="polite"></div>
+      <p class="status" id="chat-status">Connecting...</p>
+      <form class="compose" id="chat-form">
+        <input id="nick" type="text" maxlength="20" placeholder="Nickname" aria-label="Your nickname" autocomplete="nickname">
+        <input id="chat-text" type="text" maxlength="280" placeholder="Say something loud" aria-label="Message" autocomplete="off">
+        <button class="btn" id="chat-send" type="submit">Send</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- SHOP + STORIES -->
+<div class="page shop" id="p-shop" hidden>
+  <section>
+    <div class="head">
+      <h2>The drop</h2>
+      <p>Crew merch is on the way. Here is what is coming out of the lair first.</p>
+    </div>
+    <div class="grid g3">
+      <article class="card tile">
+        <div class="pic" style="background:var(--lime)"><svg viewBox="0 0 200 200" role="img" aria-label="Crew tee"><path d="M60 24 L24 56 L44 88 L62 76 V176 H138 V76 L156 88 L176 56 L140 24 Q100 46 60 24Z" style="fill:var(--surface);stroke:var(--line)" stroke-width="5" stroke-linejoin="round"/><g transform="translate(70 70) scale(.3)" style="color:var(--pink)"><use href="#m-blob" width="200" height="200"/></g></svg></div>
+        <h3>Crew Tee</h3><span class="chip">Dropping soon</span>
+      </article>
+      <article class="card tile">
+        <div class="pic" style="background:var(--sky)"><svg viewBox="0 0 200 200" role="img" aria-label="Sticker pack"><g transform="rotate(-8 100 100)"><rect x="28" y="40" width="96" height="96" rx="24" style="fill:var(--surface);stroke:var(--line)" stroke-width="5"/></g><g transform="translate(70 70) rotate(8 60 60)" style="color:var(--sun)"><use href="#m-horn" width="120" height="120"/></g></svg></div>
+        <h3>Sticker Pack</h3><span class="chip">Dropping soon</span>
+      </article>
+      <article class="card tile">
+        <div class="pic" style="background:var(--pink)"><svg viewBox="0 0 200 200" role="img" aria-label="Enamel pin"><circle cx="100" cy="100" r="64" style="fill:var(--sun);stroke:var(--line)" stroke-width="5"/><g transform="translate(46 46) scale(.54)" style="color:var(--lime)"><use href="#m-fuzz" width="200" height="200"/></g></svg></div>
+        <h3>Enamel Pin</h3><span class="chip">Dropping soon</span>
+      </article>
+    </div>
+  </section>
+  <section>
+    <div class="head">
+      <h2>From the lair</h2>
+      <p>Notes, build logs and behind-the-scenes stories from the crew.</p>
+    </div>
+    <div class="grid g3">
+      <article class="card post"><span class="role">Story</span><h3>How the crew got its name</h3><p>A short, noisy origin story involving too many late nights.</p><span class="chip">Coming soon</span></article>
+      <article class="card post"><span class="role">Event</span><h3>Inside our first meetup</h3><p>What worked, what broke and what we are doing differently next time.</p><span class="chip">Coming soon</span></article>
+      <article class="card post"><span class="role">Build log</span><h3>Making this website</h3><p>How the monsters got drawn, coded and persuaded to stand still.</p><span class="chip">Coming soon</span></article>
+    </div>
+  </section>
+</div>
+
+<!-- JOIN -->
+<div class="page" id="p-join" hidden>
+  <section class="quiz">
+    <div class="q">
+      <h2>Which monster are you?</h2>
+      <p>Pick your vibe and meet your match in the crew. Then head to the chat and say hi.</p>
+      <div class="vibes" role="group" aria-label="Pick your vibe">
+        <button type="button" class="vibe" id="v-loud" data-m="horn" aria-pressed="true">Loud</button>
+        <button type="button" class="vibe" id="v-sharp" data-m="spike" aria-pressed="false">Sharp</button>
+        <button type="button" class="vibe" id="v-curious" data-m="blob" aria-pressed="false">Curious</button>
+        <button type="button" class="vibe" id="v-cozy" data-m="fuzz" aria-pressed="false">Cozy</button>
+      </div>
+    </div>
+    <div class="result" aria-live="polite">
+      <svg id="r-art" viewBox="0 0 200 200" aria-hidden="true" style="color:var(--orange)"><use id="r-use" href="#m-horn"/></svg>
+      <div><h3 id="r-name">You are Horns</h3><p id="r-text">Loud, bold and always first through the door. You would run the stream and the group chat.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ADMIN -->
+<div class="page" id="p-admin" hidden>
+  <section>
+    <div class="head">
+      <h2>Admin panel</h2>
+      <p>Controls for the crew admins: the announcement banner, chat, and the leaderboards.</p>
+    </div>
+    <div class="card" id="adm-deny"><p>This page is for admins only. Sign in with the account that owns this site, or ask the owner to share it with you as an Editor.</p></div>
+    <div class="grid g2" id="adm-body" hidden>
+
+      <div class="card adm">
+        <h3>Announcement banner</h3>
+        <p class="status">Shown at the top of every page for all visitors.</p>
+        <input type="text" id="adm-banner" maxlength="140" placeholder="Tournament night on Friday. Bring snacks." aria-label="Banner text">
+        <div class="row">
+          <button class="btn sm" type="button" id="adm-save">Publish banner</button>
+          <button class="btn sm alt" type="button" id="adm-clear">Remove banner</button>
+        </div>
+        <p class="status" id="adm-banner-msg"></p>
+      </div>
+
+      <div class="card adm">
+        <h3>Chat controls</h3>
+        <label><input type="checkbox" id="adm-chat-open"> Chat is open to everyone</label>
+        <div class="row">
+          <button class="btn sm" type="button" id="adm-badge">Show an Admin badge on my messages</button>
+          <button class="btn sm danger" type="button" id="adm-clearchat">Clear all messages</button>
+        </div>
+        <p class="status" id="adm-chat-msg"></p>
+      </div>
+
+      <div class="card adm">
+        <h3>Leaderboards</h3>
+        <select id="adm-game" aria-label="Choose a leaderboard">
+          <option value="munch">Monster Munch</option>
+          <option value="memory">Memory Match</option>
+          <option value="whack">Whack-a-Monster</option>
+        </select>
+        <div class="list" id="adm-board"></div>
+        <div class="row"><button class="btn sm danger" type="button" id="adm-reset">Reset this leaderboard</button></div>
+        <p class="status" id="adm-board-msg"></p>
+      </div>
+
+      <div class="card adm">
+        <h3>Recent chat</h3>
+        <div class="list" id="adm-msgs"></div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <strong>Monster Crew</strong>
+  <span>Games, gear, design and good trouble.</span>
+</footer>
+
+</div>
+
+<script>
+/* router: one page per nav item, switched on the URL hash */
+(function(){
+  var pages = ['home','crew','games','chat','shop','join','admin'];
+  function route(){
+    var h = (location.hash || '#home').slice(1);
+    if(pages.indexOf(h) < 0) h = 'home';
+    pages.forEach(function(id){ document.getElementById('p-' + id).hidden = (id !== h); });
+    document.querySelectorAll('#navlinks a').forEach(function(a){
+      if(a.getAttribute('href') === '#' + h) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    window.scrollTo(0, 0);
+    document.dispatchEvent(new CustomEvent('mc-route', { detail: h }));
+  }
+  window.addEventListener('hashchange', route);
+  route();
+
+  /* quiz */
+  var data = {
+    horn:{n:'Horns',c:'var(--orange)',t:'Loud, bold and always first through the door. You would run the stream and the group chat.'},
+    spike:{n:'Spike',c:'var(--sun)',t:'Sharp eye, sharp style. You would draw the logos and fix everyone else\'s layouts.'},
+    blob:{n:'Blobby',c:'var(--pink)',t:'Curious and watchful. You would plan the missions and spot what everyone else missed.'},
+    fuzz:{n:'Fuzz',c:'var(--lime)',t:'Warm, calm and quietly clever. You would build the tools that keep the lair running.'}
+  };
+  var btns = document.querySelectorAll('.vibe');
+  function pick(b){
+    var d = data[b.getAttribute('data-m')];
+    if(!d) return;
+    btns.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    document.getElementById('r-use').setAttribute('href', '#m-' + b.getAttribute('data-m'));
+    document.getElementById('r-art').style.color = d.c;
+    document.getElementById('r-name').textContent = 'You are ' + d.n;
+    document.getElementById('r-text').textContent = d.t;
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ pick(b); }); });
+})();
+</script>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function safe(fn){ try { return fn(); } catch(e){ return null; } }
+  var db = null, user = null, uid = null, canWrite = true, isAdmin = false;
+  var settings = { banner: '', chatOpen: true, adminIds: [] };
+  var curPage = 'home', curGame = 'munch', lastRows = [];
+  var nickEl = $('nick');
+  nickEl.value = safe(function(){ return localStorage.getItem('mc-nick'); }) || '';
+  nickEl.addEventListener('input', function(){ safe(function(){ localStorage.setItem('mc-nick', nickEl.value); }); });
+  function nick(){ return nickEl.value.trim().slice(0, 20); }
+  async function names(ids){
+    if(!user || !ids.length) return {};
+    try { return await user.profiles(ids); } catch(e){ return {}; }
+  }
+  function nameOf(ps, id, fb){ var p = ps[id]; return (p && p.name) || fb || 'Monster'; }
+  function armed(btn, label, action){
+    btn.addEventListener('click', function(){
+      if(btn.dataset.armed){ clearTimeout(btn._t); delete btn.dataset.armed; btn.textContent = btn.dataset.label; action(); return; }
+      btn.dataset.label = btn.textContent; btn.dataset.armed = '1'; btn.textContent = 'Click again to confirm';
+      btn._t = setTimeout(function(){ delete btn.dataset.armed; btn.textContent = btn.dataset.label; }, 4000);
+    });
+  }
+
+  var FIELD = { munch: 'best', memory: 'memory', whack: 'whack' };
+  var TITLE = { munch: 'Munch leaderboard', memory: 'Memory leaderboard', whack: 'Whack leaderboard' };
+  var bestBy = { munch: 0, memory: 0, whack: 0 };
+  var BESTEL = { munch: 'g-best', memory: 'm-best', whack: 'w-best' };
+  function setBest(g, n){ if(n > bestBy[g]){ bestBy[g] = n; $(BESTEL[g]).textContent = n; } }
+
+  /* ---------- settings (banner, chat lock, admin badges) ---------- */
+  function applySettings(){
+    var b = $('banner');
+    if(settings.banner){ b.textContent = settings.banner; b.hidden = false; } else { b.hidden = true; b.textContent = ''; }
+    var locked = settings.chatOpen === false && !isAdmin;
+    $('chat-send').disabled = locked || !db; $('chat-text').disabled = locked || !db;
+    if(db) chatStatus.textContent = locked ? 'The chat is paused by the crew admin.' : (canWrite ? '' : 'You can read the chat. Ask the owner for contributor access to post.');
+    $('adm-chat-open').checked = settings.chatOpen !== false;
+    if(curPage === 'admin') renderAdminLists();
+    renderChat(lastRows);
+  }
+  function startSettings(){
+    db.doc('site/settings').onSnapshot(function(s){
+      var d = s.exists ? (s.data() || {}) : {};
+      settings = { banner: typeof d.banner === 'string' ? d.banner : '', chatOpen: d.chatOpen !== false, adminIds: Array.isArray(d.adminIds) ? d.adminIds : [] };
+      applySettings();
+    }, function(){});
+  }
+  function saveSettings(patch, msgEl, okText){
+    var next = Object.assign({}, settings, patch);
+    return db.doc('site/settings').set(next).then(function(){ if(msgEl) msgEl.textContent = okText || 'Saved.'; })
+      .catch(function(){ if(msgEl) msgEl.textContent = 'Could not save. Only admins can change site settings.'; });
+  }
+
+  /* ---------- chat ---------- */
+  var msgsEl = $('msgs'), chatStatus = $('chat-status'), token = 0, sending = false;
+  function offline(){
+    chatStatus.textContent = 'Sign in to the crew to read and send messages.';
+    $('chat-send').disabled = true; $('chat-text').disabled = true;
+    $('lb-status').textContent = 'Sign in to the crew to see the leaderboards. You can still play.';
+  }
+  function startChat(){
+    var timer = setTimeout(function(){ chatStatus.textContent = 'Still connecting to the chat...'; }, 10000);
+    db.collection('chat').orderBy('ts', 'desc').limit(100).onSnapshot(function(snap){
+      clearTimeout(timer);
+      lastRows = snap.docs.map(function(d){ var x = d.data() || {}; return { id: d.id, uid: x.uid, nick: x.nick, text: x.text, ts: x.ts }; }).reverse();
+      applySettings();
+    }, function(){ clearTimeout(timer); chatStatus.textContent = 'The chat is unavailable right now.'; });
+  }
+  async function renderChat(rows){
+    var my = ++token;
+    var ids = []; rows.forEach(function(r){ if(r.uid && ids.indexOf(r.uid) < 0) ids.push(r.uid); });
+    var ps = await names(ids);
+    if(my !== token) return;
+    var atBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 60;
+    msgsEl.textContent = '';
+    if(!rows.length){
+      var e = document.createElement('p'); e.className = 'status';
+      e.textContent = 'No messages yet. Say hi to the crew.'; msgsEl.appendChild(e); return;
+    }
+    rows.forEach(function(r){
+      var mine = !!uid && r.uid === uid;
+      var box = document.createElement('div'); box.className = 'msg' + (mine ? ' mine' : '');
+      var who = document.createElement('div'); who.className = 'who';
+      var left = document.createElement('span');
+      var t = r.ts ? new Date(r.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+      var badge = r.uid && settings.adminIds.indexOf(r.uid) >= 0 ? ' · Admin' : '';
+      left.textContent = (mine ? 'You' : nameOf(ps, r.uid, r.nick)) + badge + (t ? '  ' + t : '');
+      who.appendChild(left);
+      if(mine || isAdmin){
+        var del = document.createElement('button'); del.type = 'button';
+        del.setAttribute('aria-label', 'Delete message'); del.textContent = '×';
+        del.addEventListener('click', function(){ db.doc('chat/' + r.id).delete().catch(function(){}); });
+        who.appendChild(del);
+      }
+      var body = document.createElement('div'); body.textContent = r.text || '';
+      box.appendChild(who); box.appendChild(body); msgsEl.appendChild(box);
+    });
+    if(atBottom) msgsEl.scrollTop = msgsEl.scrollHeight;
+  }
+  $('chat-form').addEventListener('submit', async function(ev){
+    ev.preventDefault();
+    var input = $('chat-text'), text = input.value.trim();
+    if(!text || !db || sending) return;
+    if(settings.chatOpen === false && !isAdmin) return;
+    if(!canWrite){ chatStatus.textContent = 'You can read the chat. Ask the owner for contributor access to post.'; return; }
+    sending = true;
+    try {
+      await db.collection('chat').add({ uid: uid || null, nick: nick(), text: text.slice(0, 280), ts: Date.now() });
+      input.value = ''; chatStatus.textContent = '';
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    } catch(e){
+      chatStatus.textContent = 'Could not send that message. Check your connection and try again.';
+    }
+    setTimeout(function(){ sending = false; }, 700);
+  });
+
+  /* ---------- leaderboards ---------- */
+  var unsubBoard = null;
+  function subBoard(){
+    if(!db) return;
+    if(unsubBoard){ unsubBoard(); unsubBoard = null; }
+    var g = curGame, f = FIELD[g], status = $('lb-status'), list = $('lb');
+    $('lb-title').textContent = TITLE[g];
+    list.textContent = ''; status.textContent = 'Loading scores...';
+    var timer = setTimeout(function(){ status.textContent = 'Still connecting to the leaderboard...'; }, 10000);
+    unsubBoard = db.collection('scores').orderBy(f, 'desc').limit(10).onSnapshot(async function(snap){
+      clearTimeout(timer);
+      var rows = snap.docs.map(function(d){ return d.data() || {}; }).filter(function(r){ return (r[f] || 0) > 0; });
+      var ps = await names(rows.map(function(r){ return r.uid; }).filter(Boolean));
+      if(g !== curGame) return;
+      list.textContent = '';
+      status.textContent = rows.length ? '' : 'No scores yet. Be the first on the board.';
+      rows.forEach(function(r, i){
+        var li = document.createElement('li'); if(uid && r.uid === uid) li.className = 'me';
+        var rank = document.createElement('b'); rank.textContent = String(i + 1);
+        var nm = document.createElement('span'); nm.textContent = nameOf(ps, r.uid, r.nick);
+        var sc = document.createElement('b'); sc.textContent = String(r[f] || 0);
+        li.appendChild(rank); li.appendChild(nm); li.appendChild(sc); list.appendChild(li);
+      });
+    }, function(){ clearTimeout(timer); status.textContent = 'The leaderboard is unavailable right now.'; });
+  }
+  async function saveScore(g, score){
+    setBest(g, score);
+    if(!db || !uid || !canWrite || score <= 0) return;
+    try {
+      var ref = db.doc('scores/' + uid), s = await ref.get(), f = FIELD[g];
+      var d = s.exists ? (s.data() || {}) : null, prev = d ? (d[f] || 0) : 0;
+      if(score <= prev) return;
+      var patch = { uid: uid, nick: nick(), ts: Date.now() }; patch[f] = score;
+      if(d) await ref.update(patch); else await ref.set(patch);
+    } catch(e){}
+  }
+  async function loadMyBest(){
+    if(!db || !uid) return;
+    try {
+      var s = await db.doc('scores/' + uid).get();
+      if(s.exists){ var d = s.data() || {}; setBest('munch', d.best || 0); setBest('memory', d.memory || 0); setBest('whack', d.whack || 0); }
+    } catch(e){}
+  }
+
+  /* ---------- game 1: Monster Munch ---------- */
+  var cv = $('game'), ctx = cv.getContext('2d'), W = 360, H = 520, L = '#1E1240';
+  var cols = { blob:'#FF6FAE', spike:'#FFD23F', fuzz:'#6EE07F', horn:'#FF6B2C' };
+  function art(k){
+    var c = cols[k], s = 'stroke="' + L + '" stroke-width="6" stroke-linejoin="round"', b = '';
+    if(k === 'blob') b = '<path d="M30 150 C20 80 60 30 100 30 C150 30 185 80 170 150 C168 175 140 182 100 182 C60 182 32 175 30 150Z" fill="' + c + '" ' + s + '/><circle cx="100" cy="84" r="28" fill="#fff" ' + s + '/><circle cx="104" cy="88" r="12" fill="' + L + '"/><path d="M62 128 Q100 168 138 128Z" fill="' + L + '"/>';
+    if(k === 'spike') b = '<path d="M50 62 L62 14 L86 52 L100 8 L114 52 L138 14 L150 62Z" fill="' + c + '" ' + s + '/><rect x="38" y="52" width="124" height="130" rx="52" fill="' + c + '" ' + s + '/><circle cx="76" cy="104" r="17" fill="#fff" ' + s + '/><circle cx="80" cy="106" r="7" fill="' + L + '"/><circle cx="124" cy="104" r="17" fill="#fff" ' + s + '/><circle cx="120" cy="106" r="7" fill="' + L + '"/><path d="M72 144 Q100 168 128 144" fill="none" ' + s + '/>';
+    if(k === 'fuzz') b = '<circle cx="100" cy="106" r="70" fill="none" stroke="' + L + '" stroke-width="30" stroke-dasharray="0 27.5" stroke-linecap="round"/><circle cx="100" cy="106" r="70" fill="none" stroke="' + c + '" stroke-width="22" stroke-dasharray="0 27.5" stroke-linecap="round"/><circle cx="100" cy="106" r="66" fill="' + c + '"/><circle cx="68" cy="106" r="14" fill="#fff" ' + s + '/><circle cx="100" cy="82" r="14" fill="#fff" ' + s + '/><circle cx="132" cy="106" r="14" fill="#fff" ' + s + '/><circle cx="70" cy="108" r="6" fill="' + L + '"/><circle cx="100" cy="84" r="6" fill="' + L + '"/><circle cx="130" cy="108" r="6" fill="' + L + '"/><ellipse cx="100" cy="146" rx="18" ry="11" fill="' + L + '"/>';
+    if(k === 'horn') b = '<path d="M52 70 L36 18 L84 54Z M148 70 L164 18 L116 54Z" fill="#FFD23F" ' + s + '/><rect x="34" y="52" width="132" height="128" rx="46" fill="' + c + '" ' + s + '/><circle cx="76" cy="100" r="16" fill="#fff" ' + s + '/><circle cx="124" cy="100" r="16" fill="#fff" ' + s + '/><circle cx="78" cy="104" r="7" fill="' + L + '"/><circle cx="122" cy="104" r="7" fill="' + L + '"/><path d="M56 78 L92 90 M144 78 L108 90" fill="none" ' + s + '/><path d="M62 134 H138 Q132 166 100 166 Q68 166 62 134Z" fill="' + L + '"/><path d="M72 134 l9 18 l9 -18z M110 134 l9 18 l9 -18z" fill="#fff"/>';
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">' + b + '</svg>');
+  }
+  var imgs = {}, sel = 'blob';
+  Object.keys(cols).forEach(function(k){ var im = new Image(); im.onload = draw; im.src = art(k); imgs[k] = im; });
+  var snacks = ['🍕', '🍔', '🍩', '🍪', '🍉'], BOMB = '💣';
+  var running = false, over = false, score = 0, lives = 3, items = [], px = W / 2, target = W / 2, last = 0, spawn = 0, flash = 0, keys = {}, raf = 0;
+  function hud(){ $('g-score').textContent = score; $('g-lives').textContent = 'Lives ' + lives; }
+  function draw(){
+    var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#9ADBFF'); g.addColorStop(1, '#E4F6FF');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#6EE07F'; ctx.fillRect(0, H - 34, W, 34);
+    ctx.fillStyle = L; ctx.fillRect(0, H - 34, W, 4);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = '32px serif';
+    items.forEach(function(it){ ctx.fillText(it.e, it.x, it.y); });
+    var im = imgs[sel]; if(im && im.complete) ctx.drawImage(im, px - 38, H - 106, 76, 76);
+    if(flash > 0){ ctx.fillStyle = 'rgba(255,60,60,' + (flash * 1.4) + ')'; ctx.fillRect(0, 0, W, H); }
+    if(!running){
+      ctx.fillStyle = 'rgba(30,18,64,.55)'; ctx.fillRect(0, 150, W, 120);
+      ctx.fillStyle = '#fff'; ctx.font = '30px "Bowlby One", Impact, sans-serif';
+      ctx.fillText(over ? 'Game over' : 'Monster Munch', W / 2, 190);
+      ctx.font = '16px Rubik, system-ui, sans-serif';
+      ctx.fillText(over ? 'You scored ' + score + '. Press play again.' : 'Press Start game, then drag or use arrows.', W / 2, 232);
+    }
+  }
+  function loop(ts){
+    if(!running) return;
+    var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+    var dir = (keys.ArrowRight || keys.d ? 1 : 0) - (keys.ArrowLeft || keys.a ? 1 : 0);
+    if(dir) target = Math.max(38, Math.min(W - 38, target + dir * 380 * dt));
+    px += (target - px) * Math.min(1, dt * 14);
+    spawn -= dt;
+    if(spawn <= 0){
+      spawn = Math.max(0.35, 0.85 - score * 0.012);
+      var bomb = Math.random() < 0.26;
+      items.push({ x: 28 + Math.random() * (W - 56), y: -20, vy: 130 + Math.min(score, 60) * 4 + Math.random() * 40, bomb: bomb, e: bomb ? BOMB : snacks[Math.floor(Math.random() * snacks.length)] });
+    }
+    for(var i = items.length - 1; i >= 0; i--){
+      var it = items[i]; it.y += it.vy * dt;
+      if(it.y > H - 100 && it.y < H - 40 && Math.abs(it.x - px) < 44){
+        items.splice(i, 1);
+        if(it.bomb){ lives--; flash = 0.3; } else { score++; }
+        hud();
+        if(lives <= 0){ finish(); return; }
+      } else if(it.y > H + 20){ items.splice(i, 1); }
+    }
+    if(flash > 0) flash -= dt;
+    draw();
+    raf = requestAnimationFrame(loop);
+  }
+  function start(){
+    cancelAnimationFrame(raf);
+    items = []; score = 0; lives = 3; flash = 0; spawn = 0.4; px = target = W / 2; over = false; running = true;
+    hud(); $('g-start').textContent = 'Restart'; last = performance.now(); raf = requestAnimationFrame(loop);
+  }
+  function stopMunch(){ if(running){ running = false; cancelAnimationFrame(raf); $('g-start').textContent = 'Start game'; draw(); } }
+  function finish(){
+    running = false; over = true; flash = 0; draw();
+    $('g-start').textContent = 'Play again';
+    saveScore('munch', score);
+  }
+  function aim(e){ var r = cv.getBoundingClientRect(); target = Math.max(38, Math.min(W - 38, (e.clientX - r.left) / r.width * W)); }
+  cv.addEventListener('pointermove', aim);
+  cv.addEventListener('pointerdown', aim);
+  window.addEventListener('keydown', function(e){
+    var k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if(k === 'ArrowLeft' || k === 'ArrowRight' || k === 'a' || k === 'd'){
+      if(e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+      keys[k] = true;
+      if(running && k.indexOf('Arrow') === 0) e.preventDefault();
+    }
+  });
+  window.addEventListener('keyup', function(e){
+    var k = e.key.length === 1 ? e.key.toLowerCase() : e.key; keys[k] = false;
+  });
+  $('g-start').addEventListener('click', start);
+  document.querySelectorAll('.pick button').forEach(function(b){
+    b.addEventListener('click', function(){
+      sel = b.getAttribute('data-m');
+      document.querySelectorAll('.pick button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      if(!running) draw();
+    });
+  });
+  draw(); hud();
+
+  /* ---------- game 2: Memory Match ---------- */
+  var PAIRS = [['blob','--pink'],['blob','--sky'],['spike','--sun'],['spike','--lime'],['fuzz','--orange'],['fuzz','--pink'],['horn','--lime'],['horn','--sky']];
+  var memGrid = $('mem-grid'), mem = { first: null, lock: false, moves: 0, matched: 0, t0: 0, timer: 0, run: false };
+  function memHud(){ $('m-moves').textContent = mem.moves; $('m-time').textContent = mem.t0 ? Math.floor((Date.now() - mem.t0) / 1000) : 0; }
+  function memBuild(){
+    clearInterval(mem.timer);
+    mem = { first: null, lock: false, moves: 0, matched: 0, t0: 0, timer: 0, run: true };
+    var deck = PAIRS.concat(PAIRS).map(function(p, i){ return { k: p[0] + p[1], m: p[0], c: p[1] }; });
+    for(var i = deck.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = deck[i]; deck[i] = deck[j]; deck[j] = t; }
+    memGrid.textContent = ''; $('m-msg').textContent = ''; memHud();
+    deck.forEach(function(c, idx){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'card-m'; b.setAttribute('aria-label', 'Card ' + (idx + 1)); b.dataset.k = c.k;
+      var back = document.createElement('span'); back.className = 'back'; back.textContent = '?';
+      var face = document.createElement('span'); face.className = 'face';
+      face.innerHTML = '<svg viewBox="0 0 200 200" aria-hidden="true" style="color:var(' + c.c + ')"><use href="#m-' + c.m + '"/></svg>';
+      b.appendChild(back); b.appendChild(face);
+      b.addEventListener('click', function(){ flip(b); });
+      memGrid.appendChild(b);
+    });
+    $('m-start').textContent = 'New game';
+  }
+  function flip(b){
+    if(!mem.run || mem.lock || b.classList.contains('up')) return;
+    if(!mem.t0){ mem.t0 = Date.now(); mem.timer = setInterval(memHud, 1000); }
+    b.classList.add('up');
+    if(!mem.first){ mem.first = b; return; }
+    mem.moves++; memHud();
+    var a = mem.first; mem.first = null;
+    if(a.dataset.k === b.dataset.k){
+      a.classList.add('done'); b.classList.add('done'); mem.matched++;
+      if(mem.matched === PAIRS.length) memFinish();
+    } else {
+      mem.lock = true;
+      setTimeout(function(){ a.classList.remove('up'); b.classList.remove('up'); mem.lock = false; }, 700);
+    }
+  }
+  function memFinish(){
+    clearInterval(mem.timer); mem.run = false;
+    var secs = Math.floor((Date.now() - mem.t0) / 1000);
+    var pts = Math.max(1, 120 - mem.moves * 4 - Math.floor(secs / 2));
+    $('m-time').textContent = secs;
+    $('m-msg').textContent = 'Done in ' + mem.moves + ' moves and ' + secs + 's. Score ' + pts + '.';
+    saveScore('memory', pts);
+  }
+  function stopMemory(){ clearInterval(mem.timer); }
+  $('m-start').addEventListener('click', memBuild);
+  memBuild();
+
+  /* ---------- game 3: Whack-a-Monster ---------- */
+  var whGrid = $('wh-grid'), wh = { run: false, score: 0, time: 30, tick: 0, pop: 0 };
+  var MON = ['blob', 'spike', 'fuzz', 'horn'];
+  for(var hI = 0; hI < 9; hI++){
+    (function(){
+      var h = document.createElement('button'); h.type = 'button'; h.className = 'hole'; h.setAttribute('aria-label', 'Hole');
+      h.addEventListener('click', function(){
+        var up = h.dataset.up; if(!wh.run || !up) return;
+        if(up === 'm') wh.score++; else wh.score = Math.max(0, wh.score - 2);
+        clearHole(h); whHud();
+      });
+      whGrid.appendChild(h);
+    })();
+  }
+  function clearHole(h){ delete h.dataset.up; h.textContent = ''; }
+  function whHud(){ $('w-score').textContent = wh.score; $('w-time').textContent = wh.time; }
+  function whSpawn(){
+    if(!wh.run) return;
+    var free = Array.prototype.filter.call(whGrid.children, function(h){ return !h.dataset.up; });
+    var h = free[Math.floor(Math.random() * free.length)];
+    var speedUp = 30 - wh.time;
+    if(h){
+      var decoy = Math.random() < 0.2;
+      h.dataset.up = decoy ? 'd' : 'm';
+      if(decoy){ h.textContent = '🍕'; }
+      else {
+        var k = MON[Math.floor(Math.random() * MON.length)], c = ['--pink', '--sun', '--lime', '--orange', '--sky'][Math.floor(Math.random() * 5)];
+        h.innerHTML = '<svg viewBox="0 0 200 200" aria-hidden="true" style="color:var(' + c + ')"><use href="#m-' + k + '"/></svg>';
+      }
+      setTimeout(function(){ clearHole(h); }, Math.max(550, 1000 - speedUp * 14));
+    }
+    wh.pop = setTimeout(whSpawn, Math.max(380, 800 - speedUp * 14));
+  }
+  function whStop(){
+    wh.run = false; clearInterval(wh.tick); clearTimeout(wh.pop);
+    Array.prototype.forEach.call(whGrid.children, clearHole);
+  }
+  function whStart(){
+    whStop(); wh.score = 0; wh.time = 30; wh.run = true; $('w-msg').textContent = ''; whHud();
+    $('w-start').textContent = 'Restart';
+    wh.tick = setInterval(function(){
+      wh.time--; whHud();
+      if(wh.time <= 0){
+        var s = wh.score; whStop();
+        $('w-msg').textContent = 'Time up. You whacked ' + s + ' points.';
+        $('w-start').textContent = 'Play again';
+        saveScore('whack', s);
+      }
+    }, 1000);
+    whSpawn();
+  }
+  $('w-start').addEventListener('click', whStart);
+
+  /* ---------- game switching ---------- */
+  function showGame(g){
+    stopMunch(); stopMemory(); if(wh.run){ whStop(); $('w-start').textContent = 'Start game'; }
+    curGame = g;
+    ['munch', 'memory', 'whack'].forEach(function(x){
+      $('gp-' + x).hidden = (x !== g);
+      $('tab-' + x).setAttribute('aria-pressed', x === g ? 'true' : 'false');
+    });
+    if(g === 'memory' && mem.run && mem.t0){ mem.timer = setInterval(memHud, 1000); }
+    subBoard();
+  }
+  document.querySelectorAll('.tab').forEach(function(t){ t.addEventListener('click', function(){ showGame(t.getAttribute('data-g')); }); });
+
+  document.addEventListener('mc-route', function(e){
+    curPage = e.detail;
+    if(curPage !== 'games'){ stopMunch(); stopMemory(); if(wh.run){ whStop(); $('w-start').textContent = 'Start game'; } }
+    if(curPage === 'admin') renderAdmin();
+    if(curPage === 'chat') setTimeout(function(){ msgsEl.scrollTop = msgsEl.scrollHeight; }, 0);
+  });
+
+  /* ---------- admin ---------- */
+  var admGame = 'munch', unsubAdm = null;
+  function renderAdmin(){
+    $('adm-deny').hidden = isAdmin; $('adm-body').hidden = !isAdmin;
+    if(!isAdmin) return;
+    $('adm-banner').value = settings.banner;
+    $('adm-chat-open').checked = settings.chatOpen !== false;
+    $('adm-badge').textContent = (uid && settings.adminIds.indexOf(uid) >= 0) ? 'Remove my Admin badge' : 'Show an Admin badge on my messages';
+    renderAdminLists(); subAdminBoard();
+  }
+  async function renderAdminLists(){
+    if(!isAdmin) return;
+    $('adm-badge').textContent = (uid && settings.adminIds.indexOf(uid) >= 0) ? 'Remove my Admin badge' : 'Show an Admin badge on my messages';
+    var list = $('adm-msgs'); list.textContent = '';
+    var ids = []; lastRows.forEach(function(r){ if(r.uid && ids.indexOf(r.uid) < 0) ids.push(r.uid); });
+    var ps = await names(ids);
+    $('adm-chat-msg').textContent = lastRows.length + ' recent message' + (lastRows.length === 1 ? '' : 's') + ' loaded.';
+    if(!lastRows.length){ var p = document.createElement('p'); p.className = 'status'; p.textContent = 'No messages yet.'; list.appendChild(p); return; }
+    lastRows.slice().reverse().forEach(function(r){
+      var it = document.createElement('div'); it.className = 'item';
+      var sp = document.createElement('span'); sp.textContent = nameOf(ps, r.uid, r.nick) + ': ' + (r.text || '');
+      var del = document.createElement('button'); del.type = 'button'; del.className = 'btn sm danger'; del.textContent = 'Delete';
+      del.addEventListener('click', function(){ db.doc('chat/' + r.id).delete().catch(function(){}); });
+      it.appendChild(sp); it.appendChild(del); list.appendChild(it);
+    });
+  }
+  function subAdminBoard(){
+    if(!db) return;
+    if(unsubAdm){ unsubAdm(); unsubAdm = null; }
+    var g = admGame, f = FIELD[g], list = $('adm-board');
+    unsubAdm = db.collection('scores').orderBy(f, 'desc').limit(50).onSnapshot(async function(snap){
+      var rows = snap.docs.map(function(d){ var x = d.data() || {}; x._id = d.id; return x; }).filter(function(r){ return (r[f] || 0) > 0; });
+      var ps = await names(rows.map(function(r){ return r.uid; }).filter(Boolean));
+      if(g !== admGame) return;
+      list.textContent = '';
+      if(!rows.length){ var p = document.createElement('p'); p.className = 'status'; p.textContent = 'No scores on this leaderboard.'; list.appendChild(p); return; }
+      rows.forEach(function(r){
+        var it = document.createElement('div'); it.className = 'item';
+        var sp = document.createElement('span'); sp.textContent = nameOf(ps, r.uid, r.nick) + ': ' + r[f];
+        var rm = document.createElement('button'); rm.type = 'button'; rm.className = 'btn sm danger'; rm.textContent = 'Remove';
+        rm.addEventListener('click', function(){ var patch = {}; patch[f] = 0; db.doc('scores/' + r._id).update(patch).catch(function(){ $('adm-board-msg').textContent = 'Could not remove that score.'; }); });
+        it.appendChild(sp); it.appendChild(rm); list.appendChild(it);
+      });
+    }, function(){ list.textContent = ''; $('adm-board-msg').textContent = 'Could not load scores.'; });
+  }
+  $('adm-game').addEventListener('change', function(){ admGame = $('adm-game').value; $('adm-board-msg').textContent = ''; subAdminBoard(); });
+  $('adm-save').addEventListener('click', function(){
+    var t = $('adm-banner').value.trim().slice(0, 140);
+    saveSettings({ banner: t }, $('adm-banner-msg'), t ? 'Banner published.' : 'Banner removed.');
+  });
+  $('adm-clear').addEventListener('click', function(){ $('adm-banner').value = ''; saveSettings({ banner: '' }, $('adm-banner-msg'), 'Banner removed.'); });
+  $('adm-chat-open').addEventListener('change', function(){
+    var open = $('adm-chat-open').checked;
+    saveSettings({ chatOpen: open }, $('adm-chat-msg'), open ? 'Chat is open.' : 'Chat is paused for everyone except admins.');
+  });
+  $('adm-badge').addEventListener('click', function(){
+    if(!uid){ $('adm-chat-msg').textContent = 'Your account has no id on this page, so a badge cannot be saved.'; return; }
+    var ids = settings.adminIds.slice(), i = ids.indexOf(uid);
+    if(i >= 0) ids.splice(i, 1); else ids.push(uid);
+    saveSettings({ adminIds: ids }, $('adm-chat-msg'), i >= 0 ? 'Badge removed.' : 'Badge added.');
+  });
+  armed($('adm-clearchat'), '', async function(){
+    var msg = $('adm-chat-msg'); msg.textContent = 'Clearing...';
+    try {
+      var snap = await db.collection('chat').limit(1000).get(), n = 0;
+      for(var i = 0; i < snap.docs.length; i++){ await db.doc('chat/' + snap.docs[i].id).delete(); n++; }
+      msg.textContent = 'Deleted ' + n + ' messages.';
+    } catch(e){ msg.textContent = 'Could not clear every message. Try again.'; }
+  });
+  armed($('adm-reset'), '', async function(){
+    var msg = $('adm-board-msg'), f = FIELD[admGame]; msg.textContent = 'Resetting...';
+    try {
+      var snap = await db.collection('scores').limit(1000).get(), n = 0;
+      for(var i = 0; i < snap.docs.length; i++){
+        var d = snap.docs[i].data() || {};
+        if((d[f] || 0) > 0){ var patch = {}; patch[f] = 0; await db.doc('scores/' + snap.docs[i].id).update(patch); n++; }
+      }
+      msg.textContent = 'Cleared ' + n + ' scores.';
+    } catch(e){ msg.textContent = 'Could not reset every score. Try again.'; }
+  });
+
+  /* ---------- connect ---------- */
+  (async function init(){
+    var c = window.claude;
+    if(!c || !c.use){ offline(); return; }
+    try { user = await c.use('user'); } catch(e){}
+    try { db = await c.use('db'); } catch(e){}
+    if(user){
+      try { uid = await user.id(); } catch(e){}
+      try { if((await user.can('data.write')) === false) canWrite = false; } catch(e){}
+      try { isAdmin = !!(await user.canEdit()); } catch(e){}
+    }
+    $('nav-admin').hidden = !isAdmin;
+    if(!db){ offline(); if(curPage === 'admin') renderAdmin(); return; }
+    startSettings(); startChat(); subBoard(); loadMyBest();
+    if(curPage === 'admin') renderAdmin();
+  })();
+})();
+</script>
+
+</body></html>
